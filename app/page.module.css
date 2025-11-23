@@ -1,0 +1,30 @@
+.page {
+  /* Full-screen layout, centers the miniapp shell */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 12px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;  /* stop stretching cards */
+  gap: 0px;                     /* spacing between the cards */
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Optional: responsive tweak for very small screens */
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 8px;
+  }
+}
+
+/* Reintroduce clean spacing between cards */
+.main > :not(:last-child) {
+  margin-bottom: 4px; /* Adjust 8–14px to your taste */
+}

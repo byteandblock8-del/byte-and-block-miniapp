@@ -1,0 +1,11 @@
+{
+  "name": "Byte & Block Snack",
+  "description": "BTC mood, Fear & Greed, your latest news byte, and quick swaps — all in one miniapp.",
+  "url": "http://localhost:3000",
+  "iconUrl": "http://localhost:3000/bb-ghost.png",
+  "splashImageUrl": "http://localhost:3000/bb-ghost.png",
+  "developer": {
+    "name": "Byte & Block",
+    "websiteUrl": "https://byteandblock.com"
+  }
+}

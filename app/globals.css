@@ -1,0 +1,650 @@
+/* -------------------------------------------------
+   BYTE & BLOCK THEME VARIABLES
+-------------------------------------------------- */
+:root {
+  --bb-bg: radial-gradient(circle at 20% 0%, #1b1e3a 0%, #0a0d1f 50%, #050816 100%);
+  --bb-card-bg: #0b1020;
+  --bb-border: #1f2937;
+
+  --bb-accent: #6366f1;
+  --bb-accent-soft: rgba(99, 102, 241, 0.2);
+  --bb-accent-glow: rgba(99, 102, 241, 0.35);
+
+  --bb-text: #f9fafb;
+  --bb-text-muted: #9ca3af;
+
+  --bb-danger: #ef4444;
+  --bb-warning: #f59e0b;
+  --bb-neutral: #facc15;
+  --bb-greed-soft: #22c55e;
+  --bb-greed-strong: #16a34a;
+}
+
+/* -------------------------------------------------
+   GLOBAL RESET + BODY
+-------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* 🌌 Byte & Block dynamic gradient background */
+  background: var(--bb-bg);
+  color: var(--bb-text);
+
+  min-height: 100vh;
+}
+
+/* -------------------------------------------------
+   MINIAPP ROOT LAYOUT
+-------------------------------------------------- */
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 12px;
+}
+
+/* Optional: app-shell if needed in future */
+.app-shell {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(15, 23, 42, 0.88);
+  border-radius: 24px;
+  padding: 20px 16px 24px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.8);
+}
+
+/* -------------------------------------------------
+   HEADER AREA
+-------------------------------------------------- */
+.bb-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.bb-header-ghost {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 🟣 Byte & Block ghost glow */
+  background: radial-gradient(circle at top, #22d3ee, #6366f1 40%, #a855f7);
+  box-shadow: 0 0 22px var(--bb-accent-glow);
+
+  font-size: 24px;
+}
+
+.bb-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-header-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0;               /* remove extra bottom gap */
+  line-height: 1.1;        /* tighter text block */
+}
+
+.bb-header-subtitle {
+  font-size: 12px;
+  color: var(--bb-text-muted);
+  margin-top: 2px;         /* previously 4–6px */
+  line-height: 1.3;
+}
+/* HEADER IMAGE FIXES */
+.bb-header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+
+  border-radius: 16px; /* was 12 */
+  overflow: hidden;
+
+  /* optional subtle glow (matches ghost aesthetic) */
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.4);
+}
+
+.bb-header-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ensures clean rounded corners */
+  border-radius: inherit; /* matches container */
+}
+/* -------------------------------------------------
+   GRID
+-------------------------------------------------- */
+.bb-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* -------------------------------------------------
+   CARD BASE
+-------------------------------------------------- */
+.bb-card {
+  width: 100%;
+  background: var(--bb-card-bg);
+  border-radius: 18px;
+  padding: 12px 12px 14px;
+  border: 1px solid var(--bb-border);
+  position: relative;
+  overflow: hidden;
+
+  /* ADD SPACING BETWEEN CARDS */
+  margin-bottom: 0px;
+}
+
+/* REMOVE SPACING AFTER THE LAST CARD */
+.bb-card:last-child {
+  margin-bottom: 0;
+}
+
+.bb-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, var(--bb-accent-soft), transparent 60%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.bb-card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.bb-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.bb-card-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--bb-text-muted);
+}
+
+.bb-card-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.3);
+  color: #a5f3fc;
+}
+
+/* -------------------------------------------------
+   PRICE CARD
+-------------------------------------------------- */
+.bb-price-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 4px;
+}
+
+.bb-price-value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.bb-price-change {
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.bb-price-change.positive {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.bb-price-change.negative {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+.bb-price-caption {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--bb-text-muted);
+}
+
+/* -------------------------------------------------
+   FEAR & GREED
+-------------------------------------------------- */
+.bb-fg-wrapper {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Half-circle gauge: left→right = red → green */
+.bb-fg-arc {
+  width: 200px;
+  height: 100px;
+  border-radius: 200px 200px 0 0;
+
+  /* RED ➜ ORANGE ➜ YELLOW ➜ LIGHT GREEN ➜ GREEN */
+  background: linear-gradient(
+    to right,
+    #ef4444 0%,
+    #f97316 25%,
+    #facc15 50%,
+    #4ade80 75%,
+    #22c55e 100%
+  );
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Inner cut-out to make the arc a “ring” */
+.bb-fg-arc-inner {
+  position: absolute;
+  inset: 42% 10% -10%;
+  background: var(--bb-card-bg);
+  border-radius: 999px;
+}
+
+/* Pointer dot – we’ll position this with inline style from JS */
+.bb-fg-pointer {
+  position: absolute;
+  bottom: 18px; /* was 6px */
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(15, 23, 42, 0.7);
+  transform: translateX(-50%);
+}
+
+.bb-fg-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.bb-fg-label {
+  font-size: 12px;
+  color: var(--bb-text-muted);
+}
+
+/* -------------------------------------------------
+   NEWS CARD
+-------------------------------------------------- */
+.bb-news-headline {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bb-news-body {
+  font-size: 12px;
+  color: var(--bb-text-muted);
+  margin-top: 6px;
+}
+
+.bb-latest-post {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bb-latest-thumb {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.bb-latest-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bb-latest-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bb-latest-title-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f9fafb;
+  text-decoration: none;
+}
+
+.bb-latest-title-link:hover {
+  text-decoration: underline;
+}
+
+.bb-latest-link-hint {
+  font-size: 11px;
+  color: var(--bb-text-muted);
+}
+
+.bb-latest-title-link {
+  color: var(--bb-text);
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.bb-latest-title-link:hover {
+  text-decoration: underline;
+  color: var(--bb-accent);
+  text-shadow: 0 0 8px rgba(99,102,241,0.4);
+}
+
+.bb-latest-title-link strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* -------------------------------------------------
+   SWAP CARD
+-------------------------------------------------- */
+.bb-swap-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.bb-swap-text {
+  font-size: 12px;
+  color: var(--bb-text-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.bb-swap-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, #6366f1, #22d3ee);
+  color: #0b1020;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.45);
+}
+
+.bb-swap-button span {
+  font-size: 13px;
+}
+
+
+/* -------------------------------------------------
+   SWAP CARD LAYOUT
+-------------------------------------------------- */
+
+.bb-swap-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* -------------------------------------------------
+   FULL-SCREEN MODAL FOR SWAP
+-------------------------------------------------- */
+
+.bb-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.bb-modal {
+  width: 100%;
+  max-width: 420px;
+  background: #020617;
+  border-radius: 24px;
+  padding: 16px 16px 20px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9);
+}
+
+.bb-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.bb-modal-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bb-modal-close {
+  border: none;
+  background: transparent;
+  color: var(--bb-text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bb-modal-caption {
+  font-size: 13px;
+  color: var(--bb-text-muted);
+  margin-bottom: 12px;
+}
+
+.bb-modal-placeholder {
+  border-radius: 16px;
+  border: 1px dashed var(--bb-border);
+  padding: 32px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--bb-text-muted);
+}
+
+/* Layout inside the swap card */
+.bb-swap-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* Modal backdrop */
+.bb-swap-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal shell */
+.bb-swap-modal {
+  width: 100%;
+  max-width: 480px;
+  height: 80vh;
+  background: #020617;
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal header */
+.bb-swap-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.bb-swap-modal-header h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.bb-swap-close {
+  border: none;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.bb-swap-modal-sub {
+  font-size: 12px;
+  color: var(--bb-text-muted);
+  margin-bottom: 8px;
+}
+
+/* Iframe wrapper */
+.bb-swap-iframe-wrapper {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(31, 41, 55, 0.9);
+}
+
+/* Iframe itself */
+.bb-swap-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* -------------------------------------------------
+   SWAP MODAL (miniapp-style)
+-------------------------------------------------- */
+
+.bb-swap-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 22, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  padding: 16px;
+}
+
+.bb-swap-modal-shell {
+  width: min(520px, 100% - 32px);
+  max-height: 90vh;
+  background: radial-gradient(circle at top, #111827 0, #020617 55%);
+  border-radius: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 26px 80px rgba(15, 23, 42, 0.9);
+  padding: 16px 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bb-swap-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.bb-swap-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bb-swap-modal-subtitle {
+  font-size: 13px;
+  color: var(--bb-text-muted);
+  margin-top: 4px;
+  max-width: 360px;
+}
+
+.bb-swap-modal-close {
+  border: none;
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-swap-modal-divider {
+  margin: 10px 0 14px;
+  height: 1px;
+  background: radial-gradient(circle at left, rgba(148, 163, 184, 0.45), transparent);
+}
+
+.bb-swap-modal-body {
+  flex: 1;
+  min-height: 0; /* allow iframe to shrink within max-height */
+}
+
+/* Make the iframe tall enough to see "Connect" on most screens */
+.bb-swap-iframe {
+  width: 100%;
+  height: min(640px, 75vh);
+  border-radius: 20px;
+  border: none;
+  background: #020617;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .bb-swap-modal-shell {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px;
+    padding: 14px 12px 18px;
+  }
+
+  .bb-swap-modal-subtitle {
+    max-width: 100%;
+  }
+}
