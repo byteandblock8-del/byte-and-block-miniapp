@@ -1,35 +1,30 @@
 "use client";
 
 import { useEffect } from "react";
+import { sdk } from "@farcaster/miniapp-sdk";
 
 export default function FarcasterReady() {
   useEffect(() => {
-    try {
-      const w = window;
-
-      // If some SDK is injected on window (implementation-defined),
-      // try to call actions.ready() on it in a best-effort way.
-      const candidates = [
-        w?.sdk,
-        w?.miniapp,
-        w?.farcasterMiniAppSdk,
-        w?.farcaster?.miniapp,
-      ].filter(Boolean);
-
-      for (const maybeSdk of candidates) {
-        const actions = maybeSdk?.actions || maybeSdk?.client?.actions;
-        if (actions && typeof actions.ready === "function") {
-          actions.ready();
-          // Stop after the first successful call
-          break;
+    async function notifyReady() {
+      try {
+        // In normal browsers (not Warpcast/Base), the sdk may not exist.
+        if (!sdk || !sdk.actions || typeof sdk.actions.ready !== "function") {
+          console.warn(
+            "[FarcasterReady] sdk.actions.ready not available – skipping."
+          );
+          return;
         }
+
+        await sdk.actions.ready();
+        console.log("[FarcasterReady] sdk.actions.ready() called");
+      } catch (err) {
+        console.error("[FarcasterReady] Error calling ready()", err);
       }
-    } catch (err) {
-      // Never break the app if something goes wrong
-      console.error("FarcasterReady: failed to call actions.ready()", err);
     }
+
+    notifyReady();
   }, []);
 
-  // This component doesn’t render anything; it just runs the effect.
+  // Nothing to render – this just runs the effect
   return null;
 }
