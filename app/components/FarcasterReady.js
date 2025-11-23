@@ -1,22 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
+import { sdk } from "@farcaster/miniapp-sdk";
 
 export default function FarcasterReady() {
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    async function notifyReady() {
+      try {
+        console.log("[FarcasterReady] Calling sdk.actions.ready() …");
+        await sdk.actions.ready();
+        console.log("[FarcasterReady] Miniapp is ready!");
+      } catch (err) {
+        console.error("[FarcasterReady] Failed to call sdk.actions.ready()", err);
+      }
+    }
 
-    // ⬇️ Paste the exact "mini app ready" snippet from the Base/Farcaster docs here.
-    // For example, if the docs say something like:
-    //
-    //   window.dispatchEvent(new Event("miniapp-ready"));
-    //
-    // then put that line here.
-
-    // Example placeholder (you can replace with the real one from docs):
-    // window.dispatchEvent(new Event("miniapp-ready"));
+    notifyReady();
   }, []);
 
-  // No UI — this component just runs the effect
   return null;
 }
