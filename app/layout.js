@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Byte & Block Snack",
   description: "BTC mood, Fear & Greed, your latest news byte, and quick swaps — all in one miniapp.",
+   manifest: "/manifest.json"
 };
 
 export default function RootLayout({ children }) {
