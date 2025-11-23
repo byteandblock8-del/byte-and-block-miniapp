@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Card from "./components/Card";
 import SwapCard from "./components/SwapCard";
+import FarcasterReady from "./components/FarcasterReady";
 
 export const revalidate = 60;
 
@@ -242,6 +243,9 @@ export default async function Home() {
 
   return (
     <div className="app-root">
+      {/* ⭐ ADDED: Hide Base splash screen when ready */}
+      <FarcasterReady />
+      {/* ⭐ END ADDED */}
       <div className="app-shell">
         {/* Header */}
         <header className="bb-header">
