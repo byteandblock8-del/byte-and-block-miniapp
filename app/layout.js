@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,16 +22,24 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Coinbase miniapp manifest */}
         <link rel="miniapp-manifest" href="/miniapp.json" />
 
+        {/* Miniapp metadata */}
         <meta name="miniapp:display" content="standalone" />
         <meta name="miniapp:version" content="1.0.0" />
 
-        {/* Recommended */}
+        {/* Recommended mobile app capability */}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body>{children}</body>
+
+      <body>
+        {children}
+
+        {/* Vercel Analytics */}
+        <Analytics />
+      </body>
     </html>
   );
 }
