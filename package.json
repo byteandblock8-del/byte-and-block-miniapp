@@ -12,6 +12,7 @@
     "next": "16.0.3",
     "react": "19.2.0",
     "react-dom": "19.2.0"
+    "@farcaster/miniapp-sdk": "latest"
   },
   "devDependencies": {
     "eslint": "^9",
