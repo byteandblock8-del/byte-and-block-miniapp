@@ -4,9 +4,7 @@
     "payload": "",
     "signature": ""
   },
-  "baseBuilder": {
-    "ownerAddress": "0xdc0624966735146944DAa36DE1FAA4E655Fb507"
-  },
+
   "miniapp": {
     "version": "1",
     "name": "Byte & Block Snack",
@@ -25,5 +23,8 @@
     "ogDescription": "BTC price, sentiment, your latest news byte, and a quick swap on Base.",
     "ogImageUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
     "noindex": false
+  },
+    "baseBuilder": {
+    "ownerAddress": "0xdc0624966735146944DAa36DE1FAA4E655Fb507"
   }
 }
