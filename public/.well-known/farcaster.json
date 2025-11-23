@@ -1,0 +1,29 @@
+{
+  "accountAssociation": {
+    "header": "",
+    "payload": "",
+    "signature": ""
+  },
+  "baseBuilder": {
+    "ownerAddress": "0xdc0624966735146944DAa36DE1FAA4E655Fb507"
+  },
+  "miniapp": {
+    "version": "1",
+    "name": "Byte & Block Snack",
+    "homeUrl": "https://byte-and-block-miniapp.vercel.app/",
+    "iconUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
+    "splashImageUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
+    "splashBackgroundColor": "#050816",
+    "subtitle": "BTC price, Fear & Greed, and your latest Byte & Block post, plus a quick swap on Base.",
+    "description": "BTC mood dashboard: price, Fear & Greed index, your latest Byte & Block post, and a quick ETH↔USDC swap on Base.",
+    "screenshotUrls": [],
+    "primaryCategory": "finance",
+    "tags": ["bitcoin", "defi", "news", "base"],
+    "heroImageUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
+    "tagline": "Your daily BTC mood + swap",
+    "ogTitle": "Byte & Block Snack",
+    "ogDescription": "BTC price, sentiment, your latest news byte, and a quick swap on Base.",
+    "ogImageUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
+    "noindex": false
+  }
+}
