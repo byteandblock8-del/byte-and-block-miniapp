@@ -3,7 +3,7 @@
     "header": "eyJmaWQiOjE1MDMwODQsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwRDA0N0FjN0VlQ2MwNTM2NmI4RUIxNkFhMTQyZGZkODIzZjJCMzZiIn0",
     "payload": "eyJkb21haW4iOiJieXRlLWFuZC1ibG9jay1taW5pYXBwLnZlcmNlbC5hcHAifQ",
     "signature": "MYtndn0+2d/TFXlJCd/xHuiQAAPQRoyolM0xXNIsqyMSPkcN7Dxa+9sptF3gD+UURbUHyw9GDniE9RQkuwT+2Rw="
-  }
+  },
 
   "miniapp": {
     "version": "1",
