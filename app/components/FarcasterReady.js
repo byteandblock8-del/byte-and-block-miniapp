@@ -1,24 +1,35 @@
 "use client";
 
 import { useEffect } from "react";
-import { sdk } from "@farcaster/miniapp-sdk";
 
 export default function FarcasterReady() {
   useEffect(() => {
-    async function markReady() {
-      try {
-        // Tell Farcaster/Base that the mini app is ready,
-        // so it can hide the splash screen.
-        await sdk.actions.ready();
-      } catch (err) {
-        // Safe no-op outside of the mini app environment
-        console.error("sdk.actions.ready() failed or not available", err);
-      }
-    }
+    try {
+      const w = window;
 
-    markReady();
+      // If some SDK is injected on window (implementation-defined),
+      // try to call actions.ready() on it in a best-effort way.
+      const candidates = [
+        w?.sdk,
+        w?.miniapp,
+        w?.farcasterMiniAppSdk,
+        w?.farcaster?.miniapp,
+      ].filter(Boolean);
+
+      for (const maybeSdk of candidates) {
+        const actions = maybeSdk?.actions || maybeSdk?.client?.actions;
+        if (actions && typeof actions.ready === "function") {
+          actions.ready();
+          // Stop after the first successful call
+          break;
+        }
+      }
+    } catch (err) {
+      // Never break the app if something goes wrong
+      console.error("FarcasterReady: failed to call actions.ready()", err);
+    }
   }, []);
 
-  // This component doesn’t render anything visible
+  // This component doesn’t render anything; it just runs the effect.
   return null;
 }
