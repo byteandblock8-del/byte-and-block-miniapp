@@ -14,7 +14,11 @@
     "splashBackgroundColor": "#050816",
     "subtitle": "BTC mood, news and swaps",
     "description": "BTC mood dashboard: price, Fear and Greed index, your latest Byte and Block post, and a quick ETH - USDC swap on Base.",
-    "screenshotUrls": [],
+    "screenshotUrls": [
+    "https://byte-and-block-miniapp.vercel.app/Screenshot1.png",
+    "https://byte-and-block-miniapp.vercel.app/Screenshot2.png",
+    "https://byte-and-block-miniapp.vercel.app/Screenshot3.png"
+    ],
     "primaryCategory": "finance",
     "tags": ["bitcoin", "defi", "news", "base"],
     "heroImageUrl": "https://byte-and-block-miniapp.vercel.app/bb-ghost.png",
