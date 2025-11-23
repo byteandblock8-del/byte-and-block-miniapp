@@ -37,42 +37,56 @@ function getFearGreedLabel(value) {
 
 /** Fetch BTC price + 24h change from CoinGecko */
 async function getBTCData() {
-  const res = await fetch(
-    "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true",
-    { next: { revalidate: 60 } }
-  );
+  try {
+    const res = await fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true",
+      { next: { revalidate: 60 } }
+    );
 
-  if (!res.ok) {
-    console.error("Failed to fetch BTC price");
+    if (!res.ok) {
+      console.error("Failed to fetch BTC price:", res.status, res.statusText);
+      return { price: null, change: null };
+    }
+
+    const data = await res.json();
+    return {
+      price: data.bitcoin?.usd ?? null,
+      change: data.bitcoin?.usd_24h_change ?? null,
+    };
+  } catch (err) {
+    console.error("Error fetching BTC price:", err);
     return { price: null, change: null };
   }
-
-  const data = await res.json();
-  return {
-    price: data.bitcoin?.usd ?? null,
-    change: data.bitcoin?.usd_24h_change ?? null,
-  };
 }
 
 /** Fetch Fear & Greed index from alternative.me */
 async function getFearGreed() {
-  const res = await fetch(
-    "https://api.alternative.me/fng/?limit=1&format=json",
-    { next: { revalidate: 60 } }
-  );
+  try {
+    const res = await fetch(
+      "https://api.alternative.me/fng/?limit=1&format=json",
+      { next: { revalidate: 60 } }
+    );
 
-  if (!res.ok) {
-    console.error("Failed to fetch Fear & Greed");
+    if (!res.ok) {
+      console.error(
+        "Failed to fetch Fear & Greed:",
+        res.status,
+        res.statusText
+      );
+      return { value: null, classification: null };
+    }
+
+    const json = await res.json();
+    const item = json.data?.[0];
+
+    const value = item ? Number(item.value) : null;
+    const classification = item ? item.value_classification : null;
+
+    return { value, classification };
+  } catch (err) {
+    console.error("Error fetching Fear & Greed:", err);
     return { value: null, classification: null };
   }
-
-  const json = await res.json();
-  const item = json.data?.[0];
-
-  const value = item ? Number(item.value) : null;
-  const classification = item ? item.value_classification : null;
-
-  return { value, classification };
 }
 
 /** Fetch latest blog post from Byte & Block RSS */
@@ -252,38 +266,50 @@ export default async function Home() {
         {/* Cards grid */}
         <div className="bb-grid">
           {/* BTC MARKET MOOD */}
-          <Card title="BTC Market Mood" tag="Today">
-            <div className="bb-price-main">
-              <div className="bb-price-value">{priceFormatted}</div>
-              {change != null && (
-                <div
-                  className={`bb-price-change ${
-                    change >= 0 ? "positive" : "negative"
-                  }`}
-                >
-                  {changeFormatted}
-                </div>
-              )}
-            </div>
-            <p className="bb-price-caption">
-              Live BTC price with 24h move.
-            </p>
-          </Card>
+<Card title="BTC Market Mood" tag="Today">
+  <div className="bb-price-main">
+    <div className="bb-price-value">
+      {price == null ? "—" : priceFormatted}
+    </div>
+
+    {price != null && change != null && (
+      <div
+        className={`bb-price-change ${
+          change >= 0 ? "positive" : "negative"
+        }`}
+      >
+        {changeFormatted}
+      </div>
+    )}
+  </div>
+
+  <p className="bb-price-caption">
+    {price == null
+      ? "Unable to load BTC price right now. Please try again in a bit."
+      : "Live BTC price with 24h move."}
+  </p>
+</Card>
 
           {/* FEAR & GREED */}
-          <Card title="Fear & Greed Index" tag="Sentiment">
-            <div className="bb-fg-wrapper">
-              <div className="bb-fg-arc">
-                <div className="bb-fg-arc-inner" />
-                <div
-                  className="bb-fg-pointer"
-                  style={{ left: `${pointerOffset}%` }}
-                />
-              </div>
-              <div className="bb-fg-value">{fgValue ?? "--"}</div>
-              <div className="bb-fg-label">{fgLabel}</div>
-            </div>
-          </Card>
+<Card title="Fear & Greed Index" tag="Sentiment">
+  {fgValue == null ? (
+    <p className="bb-price-caption">
+      Fear &amp; Greed data is temporarily unavailable. Try again later.
+    </p>
+  ) : (
+    <div className="bb-fg-wrapper">
+      <div className="bb-fg-arc">
+        <div className="bb-fg-arc-inner" />
+        <div
+          className="bb-fg-pointer"
+          style={{ left: `${pointerOffset}%` }}
+        />
+      </div>
+      <div className="bb-fg-value">{fgValue}</div>
+      <div className="bb-fg-label">{fgLabel}</div>
+    </div>
+  )}
+</Card>
 
           {/* LATEST POST – wired to RSS + thumbnail scrape */}
           <Card title="Latest Byte & Block Post" tag="Blog">
