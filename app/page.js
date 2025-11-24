@@ -132,23 +132,23 @@ async function getLatestPost() {
       .replace(/<[^>]+>/g, "") // strip HTML tags just in case
       .trim();
 
-    // Remove boilerplate intro if present
-    const cleanedDesc = decodedDesc.replace(
+    // Try to start the excerpt from the first "1." (the numbered summary line)
+    const bulletMatch = decodedDesc.match(/1\.\s[\s\S]*/);
+    const coreDesc = (bulletMatch ? bulletMatch[0] : decodedDesc).trim();
+
+    // Remove boilerplate intro if present (just in case it's still there somewhere)
+    const cleanedDesc = coreDesc.replace(
       /^By Byte & Block — exploring the building blocks of digital finance\.\s*/i,
       ""
     );
 
-    // Base excerpt (plain text, trimmed to ~180 chars)
-    const maxLen = 180;
-    const excerpt =
-      cleanedDesc.length > maxLen
-        ? cleanedDesc.slice(0, maxLen).trimEnd() + "…"
-        : cleanedDesc;
+    // Don’t aggressively cut; keep the full “1. … 2. … 3. …” line
+    const excerpt = cleanedDesc;
 
     // HTML version with line breaks before numbered items: 1., 2., 3., ...
     const excerptHTML = excerpt
-      .replace(/(\d+\.\s*)/g, "<br/>$1") // insert <br/> before each number
-      .replace(/^<br\/>/, ""); // remove leading <br/> if any
+      .replace(/(\d+\.\s*)/g, "<br/>$1")
+      .replace(/^<br\/>/, "");
 
     return { title, link, excerpt, excerptHTML };
   } catch (err) {
@@ -329,10 +329,10 @@ export default async function Home() {
                 {/* Thumbnail on the left */}
                 {featuredImage && (
                   <img
-                    src={featuredImage}
-                    alt="Post thumbnail"
-                    width={40}
-                    height={40}
+                    src="/dailybyte.png"   // <-- your static image in /public
+                    alt="Latest Byte & Block"
+                    width={60}
+                    height={60}
                     style={{
                       borderRadius: "10px",
                       flexShrink: 0,
