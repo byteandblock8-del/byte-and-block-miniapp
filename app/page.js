@@ -133,10 +133,16 @@ async function getLatestPost() {
       .trim();
 
     // Remove boilerplate intro if present
-    const cleanedDesc = decodedDesc.replace(
+    let cleanedDesc = decodedDesc.replace(
       /^By Byte & Block — exploring the building blocks of digital finance\.\s*/i,
       ""
     );
+
+    // Remove Yoast-style footer: "The post ... appeared first on byteandblock.com."
+    cleanedDesc = cleanedDesc.replace(
+      /The post[\s\S]*?appeared first on\s*byteandblock\.com\./i,
+      ""
+    ).trim();
 
     // Base excerpt (plain text, trimmed to ~180 chars)
     const maxLen = 180;
@@ -222,11 +228,8 @@ export default async function Home() {
     getLatestPost(),
   ]);
 
-  // 2) If we have a post, try to grab its featured image
-  let featuredImage = null;
-  if (latestPost?.link) {
-    featuredImage = await getFeaturedImage(latestPost.link);
-  }
+  // Always use the static Daily Byte icon
+  const thumbnailSrc = "/dailybyte.png";
 
   const priceFormatted = formatUSD(price);
   const changeFormatted =
@@ -326,20 +329,18 @@ export default async function Home() {
                   gap: "10px",
                 }}
               >
-                {/* Thumbnail on the left */}
-                {featuredImage && (
-                  <img
-                    src={featuredImage}
-                    alt="Post thumbnail"
-                    width={40}
-                    height={40}
-                    style={{
-                      borderRadius: "10px",
-                      flexShrink: 0,
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
+              {/* Always show static Daily Byte icon */}
+              <img
+                src="/dailybyte.png"
+                alt="Daily Byte thumbnail"
+                width={60}
+                height={60}
+                style={{
+                  borderRadius: "10px",
+                  flexShrink: 0,
+                  objectFit: "cover",
+                }}
+              />
 
                 {/* Text block on the right */}
                 <div className="bb-latest-text">
