@@ -11,9 +11,9 @@
   "dependencies": {
     "@farcaster/miniapp-sdk": "latest",
     "@vercel/analytics": "^1.5.0",
-    "next": "16.0.7",
-    "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "next": "^16.0.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "eslint": "^9",
